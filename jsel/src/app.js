@@ -188,6 +188,11 @@
         if (!source) {
             return;
         }
+		
+		localStorage['jsel.xpath'] = xpath;
+		localStorage['jsel.source'] = JSON.stringify(source, null, 4);
+		localStorage['jsel.schema'] = JSON.stringify(schema, null, 4);
+		localStorage['jsel.mappings'] = JSON.stringify(mappings, null, 4);
 
         // apply jsel
         var dom = jsel(source);
@@ -211,6 +216,7 @@
                 ui.count.text('Count: 1');
                 setStatus('Query returned 1 result', 'success');
             }
+			window.results = results;
             var output = JSON.stringify(results, null, 4);
             editor.output.setValue(output, -1);
         } catch (e) {
@@ -225,4 +231,16 @@
 
     // load initial example
     loadExample('Basic');
+	
+	// restore localStorage
+	if (typeof localStorage['jsel.xpath'] === 'string') {
+		try {
+			ui.xpath.val(localStorage['jsel.xpath']);
+			editor.source.setValue(localStorage['jsel.source']);
+			editor.schema.setValue(localStorage['jsel.schema']);
+			editor.mappings.setValue(localStorage['jsel.mappings']);
+		} catch (e) {
+			console.warn('cannot restore localStorage');
+		}
+	}
 })();
