@@ -1,0 +1,3 @@
+[submodule "budget-proto"]
+	path = budget-proto
+	url = https://github.com/dragonworx/budget-proto.git
