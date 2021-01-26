@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>MimeType Checker</title>
+    <style>
+      html,
+      body {
+        position: absolute;
+        margin: 0;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+      #dropzone {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: green;
+        text-align: center;
+        padding-top: 50%;
+      }
+      p {
+        color: white;
+        font-family: monospace;
+        font-size: large;
+      }
+      #type {
+        color: darkgrey;
+        font-size: xx-large;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="dropzone">
+      <p>Drag &amp; Drop file here to show MimeType ...</p>
+      <p id="type">Waiting...</p>
+    </div>
+    <script>
+      const dropzone = document.getElementById('dropzone');
+      dropzone.addEventListener('drop', e => {
+        const items = e.dataTransfer.items;
+        e.preventDefault();
+        if (items) {
+          for (let i = 0; i < items.length; i++) {
+            if (items[i].kind === 'file') {
+              const file = items[i].getAsFile();
+              document.getElementById('type').innerText = file.type;
+            }
+          }
+        }
+      });
+      dropzone.addEventListener('dragover', e => {
+        e.preventDefault();
+        document.getElementById('dropzone').style.backgroundColor =
+          'lightgreen';
+      });
+      dropzone.addEventListener('dragout', e => {
+        document.getElementById('dropzone').style.backgroundColor = 'green';
+      });
+    </script>
+  </body>
+</html>
